@@ -1,7 +1,7 @@
 +++
 date = '2025-09-11T11:26:23-03:00'
 number='001110925'
-draft = true
+draft = false
 title = "Aquele Ali Não Segue Mais Viagem."
 tags = ["blog", "relato", "cotidiano", "carro"]
 featured_image = "images/collision.png"

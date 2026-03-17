@@ -1,0 +1,30 @@
+default: dark       # default theme: "dark" or "light"
+auto_switch: false  # set to true to respect the user preference
+
+dark:
+  bg:        '#000000'  # main site background (deep navy)
+  hl_bg:     '#14213d'  # card & circle nav background (teal)
+  fg:        '#ffffff'  # primary text (bright yellow for pop)
+  dim_fg:    '#e5e5e5'  # secondary text (muted but warm red)
+  stroke:    '#fca311'  # borders & icons (blue accent)
+  primary:   '#2437F0'  # main interactive color (buttons, links)
+  secondary: '#2437F0'  # secondary interactive/hover color
+  accent:    '#F26419'  # pervasive accent (highlights, circles)
+
+  sidebar:
+    bg: '#032b43'       # sidebar background (matches main bg)
+    fg: '#ffba08'       # sidebar text color (bright yellow)
+
+light:
+  bg:        '#ffba08'  # main site background (light yellow, cheerful)
+  hl_bg:     '#d00000'  # card & circle nav background (warm red)
+  fg:        '#032b43'  # primary text (dark navy for contrast)
+  dim_fg:    '#3f88c5'  # secondary text (soft blue)
+  stroke:    '#136f63'  # borders & icons (teal)
+  primary:   '#d00000'  # main interactive color (buttons, links)
+  secondary: '#3f88c5'  # secondary interactive/hover color
+  accent:    '#032b43'  # pervasive accent (text highlights, circles)
+
+  sidebar:
+    bg: '#ffba08'       # sidebar background (matches main bg)
+    fg: '#032b43'       # sidebar text color (dark navy)

@@ -1,0 +1,31 @@
+<footer>
+    <hr />
+    {{- partial "inject/footer.html" . -}}
+    {{- partial "footer_columns.html" . -}}
+
+    <style>
+        .quote {
+            font-style: italic;
+            color: #666;
+            font-size: 0.9em;
+            display: block;
+            margin: 20px 0;
+            text-align: center;
+        }
+    </style>
+    <p><small class="quote">
+        "Não espere ter habilidade para começar seu projeto.  
+        Seu projeto é que vai lhe ensinar a habilidade.  
+        Não espere ter confiança para começar a buscar o que deseja.  
+        A confiança vem quando você está fazendo e as coisas estão dando certo.  
+        Eu nunca iniciei um projeto sabendo o que estava fazendo."
+        <span class="quote-author">— Jen Herchenroeder</span>
+    </small></p>
+
+    <p><small>
+        {{ now.Format "2006" }} &copy; {{ .Site.Copyright | markdownify }}
+    </small></p>
+    <p><small>
+        {{ i18n "themeCopyrightNotice" | safeHTML }}
+    </small></p>
+</footer>

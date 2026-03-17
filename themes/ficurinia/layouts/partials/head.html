@@ -1,0 +1,73 @@
+<head>
+  {{ if .Site.Params.OneSignalPopUps }}
+  <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+  <script>
+    window.OneSignalDeferred = window.OneSignalDeferred || [];
+    OneSignalDeferred.push(async function(OneSignal) {
+      await OneSignal.init({
+        appId: "91025da7-3b98-4878-bd8a-75ac2dec7d54",
+      });
+    });
+  </script>
+  {{ end }}
+
+  <!-- Preconnects -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Epunda+Slab:ital,wght@0,300..900;1,300..900&family=Space+Grotesk:wght@300..700&family=Spectral:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
+  <!-- Force redirect -->
+  {{ if .Site.Params.forceRedirect }}
+      <script>
+          if (location.host != new URL("{{ .Site.BaseURL }}").host) location.href = "{{ .Site.BaseURL }}"
+      </script>
+  {{ end }}
+
+  <!-- Meta -->
+  <meta name="robots" content="noai, noimageai">
+  <meta name="viewport" content="width=device-width" />
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=7" />
+
+  <!-- RSS -->
+  {{ if .OutputFormats.Get "RSS" }}
+      {{ with .OutputFormats.Get "RSS" }}
+        <link href="{{ .Permalink }}" rel="alternate" type="application/rss+xml" title="{{ $.Site.Title }}" />
+        <link href="{{ .Permalink }}" rel="feed" type="application/rss+xml" title="{{ $.Site.Title }}" />
+      {{ end }}
+  {{ end }}
+
+  <!-- Icons -->
+  {{- partial "head_icons.html" . -}}
+
+  <!-- Title -->
+  <title>
+      {{ if and (.Title) (ne .Title .Site.Title) }}
+          {{ .Title }} &ndash;
+      {{ end }}
+      {{ .Site.Title | default "Ficurinia" }}
+  </title>
+
+  <!-- Custom Fonts -->
+  <link href="/symbols-nerd-font/symbols-nerd-font.css" rel="stylesheet" />
+  <link href="/jetbrains-mono/jetbrains-mono.css" rel="stylesheet" />
+
+  <!-- Cactus Comments -->
+  {{ if and site.Params.cactusCommentsSiteName (.Params.comments | default true) }}
+      <link rel="stylesheet" href="/css/cactus.css" type="text/css">
+  {{ end }}
+
+  <!-- Styles -->
+  {{ $style := resources.Get "/scss/style.scss" | resources.ExecuteAsTemplate "/scss/style.scss" . | css.Sass (dict "targetPath" "css/styles.css" "outputStyle" "compressed" "enableSourceMap" "true") | resources.Fingerprint "sha512" }}
+  <link type="text/css" rel="stylesheet" href={{ $style.Permalink }} integrity="{{ $style.Data.Integrity }}" />
+
+  <!-- Partials -->
+  {{- partial "inject/head.html" . -}}
+  {{- partial "head_meta_seo.html" . -}}
+  {{- partial "head_meta_opengraph.html" . -}}
+  {{- partial "head_meta_twitter.html" . -}}
+
+  <!-- Manifest -->
+  <link rel="manifest" href="/manifest/index.json" />
+</head>

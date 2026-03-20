@@ -2,7 +2,7 @@
 date = '2025-07-28T23:03:00-03:00'
 draft = false
 title = 'O que é isso?'
-comments = false
+comments = true
 +++
 
 ## O Blog:

@@ -4,8 +4,8 @@ number='001110925'
 draft = false
 title = "Aquele Ali Não Segue Mais Viagem."
 tags = ["blog", "relato", "cotidiano", "carro"]
-featured_image = "images/collision.png"
-comments = false
+featured_image = "aquele-ali-nao-segue-mais-viagem/collision.png"
+comments = true
 +++
 
 ![Manhã](/images/collision.png)

@@ -16,7 +16,7 @@ defaultContentLanguageInSubdir = false
 # you can use markdown inside this field
 copyright = "Maripasa — Under license [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)"
 
-paginate = 5  # number of articles per page in the index
+pagination.pagerSize = 5  # number of articles per page in the index
 summaryLength = 70  # number of words for article summaries
 
 

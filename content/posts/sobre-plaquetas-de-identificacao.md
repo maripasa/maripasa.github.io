@@ -4,6 +4,7 @@ draft = false
 title = 'Sobre Plaquetas de Identificação.'
 comments = true
 featured_image = "sobre-plaquetas-de-identificacao/scaled/avenida.jpg"
+tags = ["acumulador"]
 +++
 
 ![A avenida](/sobre-plaquetas-de-identificacao/scaled/avenida.jpg)

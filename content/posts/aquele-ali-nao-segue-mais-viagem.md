@@ -3,7 +3,7 @@ date = '2025-09-11T11:26:23-03:00'
 number='001110925'
 draft = false
 title = "Aquele Ali Não Segue Mais Viagem."
-tags = ["blog", "relato", "cotidiano", "carro"]
+tags = ["dia"]
 featured_image = "aquele-ali-nao-segue-mais-viagem/collision.png"
 comments = true
 +++

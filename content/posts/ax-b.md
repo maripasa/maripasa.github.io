@@ -1,8 +1,8 @@
 +++
 date = '2025-11-10T16:31:24-03:00'
-draft = false
+draft = true
 title = 'Ax=b.'
-comments = false
+comments = true
 featured_image = "ax-b/ceu-cruz.jpg"
 +++
 

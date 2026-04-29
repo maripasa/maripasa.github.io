@@ -4,6 +4,7 @@ draft = false
 title = 'Norte, Leste e Sul.'
 comments = true
 featured_image = "norte-leste-e-sul/ceu-cruz.jpg"
+tags = ["céus", "fotos"]
 +++
 
 ![Céu-Cruz](/norte-leste-e-sul/ceu-cruz.jpg)

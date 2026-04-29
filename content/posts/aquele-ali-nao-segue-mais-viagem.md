@@ -8,7 +8,7 @@ featured_image = "aquele-ali-nao-segue-mais-viagem/collision.png"
 comments = true
 +++
 
-![Manhã](/images/collision.png)
+![Manhã](/aquele-ali-nao-segue-mais-viagem/collision.png)
 
 Todo trajeto tem um "meio". Não é o meio geográfico real, nem o meio temporal. Existe um meio pessoal. É uma ponte, uma estrada de terra, uma elevação na calçada, a casa de alguém que você já amou, um poste queimado, uma fábrica antiga... Algo que te faz saber que, daqui para frente, estamos mais perto do final do que longe.
 

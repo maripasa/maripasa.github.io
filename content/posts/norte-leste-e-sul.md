@@ -2,7 +2,7 @@
 date = '2026-04-27T21:31:24-03:00'
 draft = false
 title = 'Norte, Leste e Sul.'
-comments = true
+comments = false
 featured_image = "norte-leste-e-sul/ceu-cruz.jpg"
 tags = ["céus", "fotos"]
 +++

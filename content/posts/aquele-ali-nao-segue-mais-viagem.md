@@ -5,7 +5,7 @@ draft = false
 title = "Aquele Ali Não Segue Mais Viagem."
 tags = ["dia"]
 featured_image = "aquele-ali-nao-segue-mais-viagem/collision.png"
-comments = true
+comments = false
 +++
 
 ![Manhã](/aquele-ali-nao-segue-mais-viagem/collision.png)

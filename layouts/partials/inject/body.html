@@ -1,0 +1,22 @@
+{{ if .IsHome }}
+<div id="home-earth-anchor" aria-hidden="true">
+  <img id="home-earth" src="{{ "images/space/earth.png" | relURL }}" alt="">
+</div>
+{{ end }}
+<div id="background-parallax" aria-hidden="true">
+  <div class="background-parallax-y">
+    <div class="background-parallax-x">
+      <img src="{{ "images/background.jpg" | relURL }}" alt="">
+      <img class="background-parallax-mirror" src="{{ "images/background.jpg" | relURL }}" alt="">
+      <img src="{{ "images/background.jpg" | relURL }}" alt="">
+      <img class="background-parallax-mirror" src="{{ "images/background.jpg" | relURL }}" alt="">
+      <img src="{{ "images/background.jpg" | relURL }}" alt="">
+      <img class="background-parallax-mirror" src="{{ "images/background.jpg" | relURL }}" alt="">
+    </div>
+  </div>
+</div>
+<div id="cosmic-physics-layer" aria-label="Seda e os planetas"></div>
+<img id="wizard-cursor" src="{{ "images/wizard/cursor.png" | relURL }}" alt="" aria-hidden="true">
+<script src="{{ "js/background-parallax.js" | relURL }}" defer></script>
+<script src="{{ "js/cosmic-physics.js" | relURL }}" defer></script>
+<script src="{{ "js/wizard-cursor.js" | relURL }}" defer></script>

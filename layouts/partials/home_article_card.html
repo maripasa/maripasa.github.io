@@ -1,0 +1,53 @@
+{{ $page := .Page }}
+<article class="card postlistitem">
+    <div>
+        <h2>
+            <a href="{{ $page.Permalink }}">{{ $page.Title }}</a>
+        </h2>
+
+        <p class="date">
+            <span title='{{ i18n "date" }}'>󰃭 </span>
+            {{- partial "date.html" $page.Date -}}
+            {{- if ne ($page.Date | time.Format "Jan 02, 2006 3:04 PM Z07:00") ($page.Lastmod.Format "Jan 02, 2006 3:04 PM Z07:00") -}}
+                (updated: {{- partial "date.html" $page.Lastmod -}})
+            {{ end }}
+            {{ if and (site.Params.tagsInArticlePreview | default true) $page.Params.tags }}
+                | <span title='{{ i18n "tags" }}'> </span>
+                {{ range sort $page.Params.tags }}
+                    <a href="/tags/{{ . | urlize }}">#{{ . }}</a>
+                {{ end }}
+            {{ end }}
+        </p>
+
+        {{ if $page.Site.Params.imageInArticlePreview }}
+            {{ $img := "" }}
+            {{ if $page.Params.featured_image }}
+                {{ $img = $page.Params.featured_image }}
+            {{ else }}
+                {{ $res := $page.Resources.Match "*.*" }}
+                {{ if $res }}
+                    {{ $img = $res.RelPermalink }}
+                {{ end }}
+            {{ end }}
+
+            {{ if $img }}
+                <a class="unstyledLink" href="{{ $page.Permalink }}">
+                    <img src="{{ $img | relURL }}" alt="{{ $page.Title }}" class="post-thumbnail"/>
+                </a>
+            {{ end }}
+        {{ end }}
+
+        {{ if (site.Params.articleSummary | default true) }}
+            <div class="articlePreview">
+                <p>
+                    {{ if $page.Params.description }}
+                        {{ $page.Params.description }}
+                    {{ else }}
+                        {{ $page.Summary }}
+                    {{ end }}
+                </p>
+                <p><a href="{{ $page.Permalink }}">{{ i18n "continueReading" }} </a></p>
+            </div>
+        {{ end }}
+    </div>
+</article>

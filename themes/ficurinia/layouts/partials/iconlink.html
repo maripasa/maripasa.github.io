@@ -7,7 +7,7 @@
     target="_blank"
     class="nerdlink"
     href="{{ .URL | safeURL }}">
-    {{ $icon := index site.Data.supported_icons (lower .Identifier) | safeHTML }}
+    {{ $icon := index hugo.Data.supported_icons (lower .Identifier) | safeHTML }}
     {{ if $icon }}
         {{ $icon | safeHTML }}
     {{ else }}

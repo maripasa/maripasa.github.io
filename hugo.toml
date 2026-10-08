@@ -1,15 +1,15 @@
 baseURL = "https://maripasa.github.io/"
 theme = "ficurinia"
 title = "maripasa."
-languageCode = "pt-br"
+locale = "pt-br"
 defaultContentLanguage = "pt"
 defaultContentLanguageInSubdir = false
 
 [languages]
   [languages.pt]
-    languageName = "Português"
+    label = "Português"
     weight = 1
-    languageCode = "pt-br"
+    locale = "pt-br"
 
 # this will be included in the footer after the current year the site is last
 # built, followed by the (c) symbol
@@ -55,11 +55,11 @@ summaryLength = 70  # number of words for article summaries
     articleSummary = true  # show a summary in article preview; default true
     
     fontFamily = "Spectral"  # changes the font, default "JetBrains Mono"
-    titleFontFamily = "Space Grotesk"  # font used for titles and headings
+    titleFontFamily = "Cardinal"  # font used for titles and headings
     monospaceFontFamily = "JetBrains Mono"  # changes the monospace font for code, default "JetBrains Mono"
     
     # multipliers applied to font sizes, useful for custom fonts that may be too big or too small
-    titleFontSizeMultiplier = 1.0
+    titleFontSizeMultiplier = 1.25
     mainFontSizeMultiplier = 1.2
     monoFontSizeMultiplier = 1.0
 

@@ -1,6 +1,6 @@
-{{ if (and (.Site.Params.enableFooterColumns | default false) .Site.Data.footer_columns) }}
+{{ if (and (.Site.Params.enableFooterColumns | default false) hugo.Data.footer_columns) }}
     <div class="footerColumns">
-        {{ range .Site.Data.footer_columns }}
+        {{ range hugo.Data.footer_columns }}
             <ul class="notlist">
                 <li><strong>{{ .title }}</strong></li>
                 {{ range .links }}

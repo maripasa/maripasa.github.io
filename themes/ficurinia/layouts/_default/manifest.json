@@ -4,11 +4,11 @@
   "short_name": "{{ .Site.Title }}",
   "start_url": "/",
   "display": "standalone",
-  {{ $bg := (.Site.Data.colors.dark.bg | default "#242629") }}
-  {{ $accent := (.Site.Data.colors.dark.accent | default "#db5793") }}
-  {{ if eq .Site.Data.colors.default "light" }}
-    {{ $bg = (.Site.Data.colors.light.bg | default "#f5f5f5") }}
-    {{ $accent = (.Site.Data.colors.light.accent | default "#db5793") }}
+  {{ $bg := (hugo.Data.colors.dark.bg | default "#242629") }}
+  {{ $accent := (hugo.Data.colors.dark.accent | default "#db5793") }}
+  {{ if eq hugo.Data.colors.default "light" }}
+    {{ $bg = (hugo.Data.colors.light.bg | default "#f5f5f5") }}
+    {{ $accent = (hugo.Data.colors.light.accent | default "#db5793") }}
   {{ end }}
   "background_color": "{{ $bg }}",
   "theme_color": "{{ $accent }}"

@@ -1,0 +1,40 @@
+#cosmic-physics-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  overflow: hidden;
+  pointer-events: none;
+  contain: strict;
+}
+
+.cosmic-object {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: block;
+  max-width: none;
+  height: auto;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  cursor: grab;
+  pointer-events: auto;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  transform: translate3d(var(--cosmic-x), var(--cosmic-y), 0);
+  transform-origin: center;
+  filter: drop-shadow(0 3px 3px rgb(0 0 0 / 24%));
+  will-change: transform;
+}
+
+.cosmic-object[aria-grabbed="true"] {
+  cursor: grabbing;
+  filter: drop-shadow(0 7px 5px rgb(0 0 0 / 30%));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cosmic-object {
+    filter: none;
+  }
+}

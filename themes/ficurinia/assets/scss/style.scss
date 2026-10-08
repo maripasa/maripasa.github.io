@@ -1,4 +1,4 @@
-{{ $colors := .Site.Data.colors | default dict }}
+{{ $colors := hugo.Data.colors | default dict }}
 
 $dark_bg:          {{ $colors.dark.bg         | default "#242629" }};
 $dark_hl_bg:       {{ $colors.dark.hl_bg      | default "#34363b" }};
@@ -37,7 +37,7 @@ $light_sidebar_fg: {{ $colors.light.sidebar.fg | default "#121211" }};
     --light_sidebar_bg: #{$light_sidebar_bg};
     --light_sidebar_fg: #{$light_sidebar_fg};
 
-    {{ if eq .Site.Data.colors.default "light" }}
+    {{ if eq hugo.Data.colors.default "light" }}
         --default_bg:         #{$light_bg};
         --default_hl_bg:      #{$light_hl_bg};
         --default_fg:         #{$light_fg};
@@ -912,12 +912,12 @@ input, textarea, textarea.cactus-editor-textarea {
 
 {{ if and 
     (.Site.Params.enableJumbotron | default false)
-    .Site.Data.jumbotron
+    hugo.Data.jumbotron
 }}
 {{
     $jumbo_fullscreen := (or 
-        (.Site.Data.jumbotron.fullscreen | default false)
-        (.Site.Data.jumbotron.backgroundVideo)
+        (hugo.Data.jumbotron.fullscreen | default false)
+        (hugo.Data.jumbotron.backgroundVideo)
     )
 }}
 header {
@@ -928,7 +928,7 @@ header {
     }
 }
 header.jumbotronContainer {
-    {{ if (.Site.Data.jumbotron.whiteText | default false) }}
+    {{ if (hugo.Data.jumbotron.whiteText | default false) }}
         &, *, > * {
             color: white !important;
         }
@@ -955,7 +955,7 @@ header.jumbotronContainer {
             }
         }
     {{ end }}
-    {{ if (.Site.Data.jumbotron.textShadow | default false) }}
+    {{ if (hugo.Data.jumbotron.textShadow | default false) }}
         &, * {
             text-shadow: 0 0 5px transparentize($light_fg, .3);
         }
@@ -967,19 +967,19 @@ header.jumbotronContainer {
     padding-top: 0;
     .jumbotron { display: flex; }
     {{ if and
-        .Site.Data.jumbotron.background
-        (not .Site.Data.jumbotron.backgroundVideo)
+        hugo.Data.jumbotron.background
+        (not hugo.Data.jumbotron.backgroundVideo)
     }}
         background:
             linear-gradient(
                 transparentize($dark_bg, 0.2),
                 transparentize($dark_bg, 0.2)
             ),
-            url({{ .Site.Data.jumbotron.background }});
+            url({{ hugo.Data.jumbotron.background }});
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
-    {{ else if .Site.Data.jumbotron.backgroundVideo }}
+    {{ else if hugo.Data.jumbotron.backgroundVideo }}
         background: transparent;
         > * {
             position: relative;
@@ -995,7 +995,7 @@ header.jumbotronContainer {
             z-index: 0;
             background-color: black;
             .jumbotron_video {
-                opacity: {{ .Site.Data.jumbotron.videoOpacity | default 1.0 }};
+                opacity: {{ hugo.Data.jumbotron.videoOpacity | default 1.0 }};
                 position: absolute;
                 z-index: 0;
                 left: 50%;
@@ -1012,7 +1012,7 @@ header.jumbotronContainer {
     {{ end }}
     {{ if $jumbo_fullscreen }}
         height: 100vh;
-        {{ if (.Site.Data.jumbotron.downArrow | default false) }}
+        {{ if (hugo.Data.jumbotron.downArrow | default false) }}
             margin-bottom: 100px;
             .arrow {
                 position: absolute;
@@ -1070,7 +1070,7 @@ header.jumbotronContainer {
     align-items: center;
     align-content: center;
     {{ $jumbotronImagePosition := (
-        .Site.Data.jumbotron.imagePosition | default "left"
+        hugo.Data.jumbotron.imagePosition | default "left"
     ) }}
     {{ if (eq $jumbotronImagePosition "left") }}
         flex-direction: row;

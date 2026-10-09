@@ -5,9 +5,8 @@
   if (!layer) return;
 
   const earth = document.querySelector("#home-earth");
-  const isHome = document.documentElement.classList.contains("home");
-  const postContent = isHome ? null : document.querySelector("#content");
-  const postHeader = postContent ? document.querySelector("header") : null;
+  const pageContent = document.querySelector("#content");
+  const pageHeader = pageContent ? document.querySelector("header") : null;
 
   // The rocky planets use real diameter ratios with Earth = 32 px. The four
   // giants are compressed so the rocky planets remain usable on screen.
@@ -323,11 +322,11 @@
 
     await image.decode().catch(() => new Promise((resolve) => image.addEventListener("load", resolve, { once: true })));
 
-    const postSide = postContent ? (index % 2 === 0 ? "left" : "right") : null;
-    const contentRect = postSide ? postContent.getBoundingClientRect() : null;
-    const sideSpace = postSide === "left"
+    const side = pageContent ? (index % 2 === 0 ? "left" : "right") : null;
+    const contentRect = side ? pageContent.getBoundingClientRect() : null;
+    const sideSpace = side === "left"
       ? contentRect.left
-      : postSide === "right"
+      : side === "right"
         ? window.innerWidth - contentRect.right
         : Infinity;
     const width = Math.min(config.width * viewportScale(), Math.max(1, sideSpace - 8));
@@ -361,9 +360,9 @@
     makeMask(body);
     // On posts, start each object above its assigned side lane. On the home
     // page, keep the original top-center entrance.
-    if (postSide === "left") {
+    if (side === "left") {
       body.x = Math.floor(contentRect.left) - body.bounds.maxX - 5;
-    } else if (postSide === "right") {
+    } else if (side === "right") {
       body.x = Math.ceil(contentRect.right) + 4 - body.bounds.minX;
     } else {
       body.x = window.innerWidth / 2 - (body.bounds.minX + body.bounds.maxX + 1) / 2;
@@ -501,26 +500,26 @@
     requestAnimationFrame(animate);
   }
 
-  const postColliders = postContent && postHeader
+  const pageColliders = pageContent && pageHeader
     ? [
-        createRectangleCollider(() => postContent.getBoundingClientRect(), "post content"),
+        createRectangleCollider(() => pageContent.getBoundingClientRect(), "page content"),
         createRectangleCollider(() => {
-          const contentRect = postContent.getBoundingClientRect();
-          const headerRect = postHeader.getBoundingClientRect();
+          const contentRect = pageContent.getBoundingClientRect();
+          const headerRect = pageHeader.getBoundingClientRect();
           return {
             left: contentRect.left,
             right: contentRect.right,
             top: headerRect.top,
             bottom: headerRect.bottom
           };
-        }, "post header")
+        }, "page header")
       ]
     : [];
 
   Promise.all([
     Promise.all(objects.map(createBody)),
     earth ? createSceneryCollider(earth, "terra") : Promise.resolve(null),
-    Promise.resolve(postColliders)
+    Promise.resolve(pageColliders)
   ]).then(([createdBodies]) => {
     // Start every delay from the same instant so the launch order is guaranteed,
     // regardless of which image happened to decode first.

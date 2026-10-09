@@ -20,7 +20,7 @@
 <link rel="stylesheet" href="{{ "css/wizard-cursor.css" | relURL }}">
 {{ if or .IsHome (and .IsPage (eq .Section "posts")) }}
 <style>
-  @media (max-width: 960px) {
+  @media (min-width: 761px) and (max-width: 960px) {
     #content {
       max-width: calc(100vw - 160px);
     }

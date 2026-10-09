@@ -322,7 +322,9 @@
 
     await image.decode().catch(() => new Promise((resolve) => image.addEventListener("load", resolve, { once: true })));
 
-    const side = pageContent ? (index % 2 === 0 ? "left" : "right") : null;
+    const side = pageContent && window.innerWidth > 760
+      ? (index % 2 === 0 ? "left" : "right")
+      : null;
     const contentRect = side ? pageContent.getBoundingClientRect() : null;
     const sideSpace = side === "left"
       ? contentRect.left
@@ -502,8 +504,13 @@
 
   const pageColliders = pageContent && pageHeader
     ? [
-        createRectangleCollider(() => pageContent.getBoundingClientRect(), "page content"),
+        createRectangleCollider(() => window.innerWidth <= 760
+          ? { left: 0, right: 0, top: 0, bottom: 0 }
+          : pageContent.getBoundingClientRect(), "page content"),
         createRectangleCollider(() => {
+          if (window.innerWidth <= 760) {
+            return { left: 0, right: 0, top: 0, bottom: 0 };
+          }
           const contentRect = pageContent.getBoundingClientRect();
           const headerRect = pageHeader.getBoundingClientRect();
           return {

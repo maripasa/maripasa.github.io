@@ -19,8 +19,10 @@
     </div>
   </div>
 </div>
+{{ if .IsHome }}
 <div id="cosmic-physics-layer" aria-label="Seda e os planetas"></div>
+<script src="{{ "js/cosmic-physics.js" | relURL }}" defer></script>
+{{ end }}
 <img id="wizard-cursor" src="{{ "images/wizard/cursor.png" | relURL }}" alt="" aria-hidden="true">
 <script src="{{ "js/background-parallax.js" | relURL }}" defer></script>
-<script src="{{ "js/cosmic-physics.js" | relURL }}" defer></script>
 <script src="{{ "js/wizard-cursor.js" | relURL }}" defer></script>

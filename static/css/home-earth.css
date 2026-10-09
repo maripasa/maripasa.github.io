@@ -9,7 +9,7 @@
 #home-earth {
   display: block;
   width: clamp(480px, 72vw, 900px);
-  max-width: none;
+  max-width: 100%;
   height: auto;
   margin: 0 auto;
   filter: drop-shadow(0 0 42px rgb(70 145 255 / 35%));

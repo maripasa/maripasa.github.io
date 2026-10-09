@@ -16,3 +16,34 @@
   user-select: none;
   -webkit-user-drag: none;
 }
+
+#corner-creatures {
+  position: fixed;
+  z-index: 2;
+  inset: 12px;
+  pointer-events: none;
+}
+
+.corner-creature {
+  position: absolute;
+  bottom: 0;
+  display: block;
+  width: clamp(88px, 12vw, 145px);
+  height: auto;
+  margin: 0;
+  opacity: 0.42;
+  filter: invert(1);
+  mix-blend-mode: screen;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.corner-creature--bottom-left {
+  left: 0;
+  transform: scaleY(-1);
+}
+
+.corner-creature--bottom-right {
+  right: 0;
+  transform: scale(-1, -1);
+}

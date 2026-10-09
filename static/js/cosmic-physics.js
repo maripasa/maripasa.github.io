@@ -5,6 +5,9 @@
   if (!layer) return;
 
   const earth = document.querySelector("#home-earth");
+  const isHome = document.documentElement.classList.contains("home");
+  const postContent = isHome ? null : document.querySelector("#content");
+  const postHeader = postContent ? document.querySelector("header") : null;
 
   // The rocky planets use real diameter ratios with Earth = 32 px. The four
   // giants are compressed so the rocky planets remain usable on screen.
@@ -69,6 +72,16 @@
       : body.mass;
   }
 
+  function makeRectangleMask(body) {
+    body.maskWidth = Math.max(1, body.width);
+    body.maskHeight = Math.max(1, body.height);
+    body.mask = new Uint8Array(body.maskWidth * body.maskHeight);
+    body.mask.fill(1);
+    body.bounds = body.width > 0 && body.height > 0
+      ? { minX: 0, minY: 0, maxX: body.width - 1, maxY: body.height - 1 }
+      : { minX: 0, minY: 0, maxX: -1, maxY: -1 };
+  }
+
   function solidAt(body, x, y) {
     const pixelX = Math.floor(x);
     const pixelY = Math.floor(y);
@@ -125,6 +138,15 @@
   function resolveCollision(first, second) {
     if (first.dragging && second.dragging) return;
 
+    if (first.rectangle && !second.fixed) {
+      resolveRectangleCollision(first, second);
+      return;
+    }
+    if (second.rectangle && !first.fixed) {
+      resolveRectangleCollision(second, first);
+      return;
+    }
+
     const normal = collisionNormal(first, second);
     const inverseFirst = first.dragging || first.fixed ? 0 : 1 / first.mass;
     const inverseSecond = second.dragging || second.fixed ? 0 : 1 / second.mass;
@@ -158,6 +180,32 @@
     if (!second.dragging && !second.fixed) {
       second.vx += impulse * normal.x * inverseSecond;
       second.vy += impulse * normal.y * inverseSecond;
+    }
+  }
+
+  function resolveRectangleCollision(rectangle, moving) {
+    if (moving.dragging || moving.fixed) return;
+
+    const obstacle = opaqueWorldBounds(rectangle);
+    const object = opaqueWorldBounds(moving);
+    const exits = [
+      { distance: object.right - obstacle.left, x: -1, y: 0, dx: obstacle.left - object.right, dy: 0 },
+      { distance: obstacle.right - object.left, x: 1, y: 0, dx: obstacle.right - object.left, dy: 0 },
+      { distance: object.bottom - obstacle.top, x: 0, y: -1, dx: 0, dy: obstacle.top - object.bottom },
+      { distance: obstacle.bottom - object.top, x: 0, y: 1, dx: 0, dy: obstacle.bottom - object.top }
+    ];
+    const exit = exits.reduce((nearest, candidate) =>
+      candidate.distance < nearest.distance ? candidate : nearest
+    );
+
+    moving.x += exit.dx;
+    moving.y += exit.dy;
+
+    const closingSpeed = moving.vx * exit.x + moving.vy * exit.y;
+    if (closingSpeed < 0) {
+      const restitution = 0.62;
+      moving.vx -= (1 + restitution) * closingSpeed * exit.x;
+      moving.vy -= (1 + restitution) * closingSpeed * exit.y;
     }
   }
 
@@ -275,7 +323,14 @@
 
     await image.decode().catch(() => new Promise((resolve) => image.addEventListener("load", resolve, { once: true })));
 
-    const width = config.width * viewportScale();
+    const postSide = postContent ? (index % 2 === 0 ? "left" : "right") : null;
+    const contentRect = postSide ? postContent.getBoundingClientRect() : null;
+    const sideSpace = postSide === "left"
+      ? contentRect.left
+      : postSide === "right"
+        ? window.innerWidth - contentRect.right
+        : Infinity;
+    const width = Math.min(config.width * viewportScale(), Math.max(1, sideSpace - 8));
     const height = width * image.naturalHeight / image.naturalWidth;
     image.style.width = `${width}px`;
     image.style.height = `${height}px`;
@@ -304,9 +359,15 @@
     };
 
     makeMask(body);
-    // Align the first opaque pixel with the ceiling so each object visibly
-    // erupts from the top-center rather than appearing in mid-air.
-    body.x = window.innerWidth / 2 - (body.bounds.minX + body.bounds.maxX + 1) / 2;
+    // On posts, start each object above its assigned side lane. On the home
+    // page, keep the original top-center entrance.
+    if (postSide === "left") {
+      body.x = Math.floor(contentRect.left) - body.bounds.maxX - 5;
+    } else if (postSide === "right") {
+      body.x = Math.ceil(contentRect.right) + 4 - body.bounds.minX;
+    } else {
+      body.x = window.innerWidth / 2 - (body.bounds.minX + body.bounds.maxX + 1) / 2;
+    }
     body.y = -body.bounds.minY;
     image.addEventListener("pointerdown", (event) => beginDrag(event, body));
     image.addEventListener("pointermove", (event) => moveDrag(event, body));
@@ -347,17 +408,53 @@
     return body;
   }
 
+  function createRectangleCollider(rectProvider, name) {
+    const body = {
+      name,
+      image: null,
+      width: 0,
+      height: 0,
+      x: -10000,
+      y: -10000,
+      vx: 0,
+      vy: 0,
+      active: true,
+      fixed: true,
+      rectangle: true,
+      rectProvider,
+      dragging: false,
+      mask: new Uint8Array(1),
+      maskWidth: 1,
+      maskHeight: 1,
+      bounds: { minX: 0, minY: 0, maxX: -1, maxY: -1 },
+      mass: Infinity
+    };
+
+    syncSceneryCollider(body, true);
+    bodies.push(body);
+    return body;
+  }
+
   function syncSceneryCollider(body, forceMask = false) {
-    const rect = body.image.getBoundingClientRect();
-    const width = Math.max(1, Math.round(rect.width));
-    const height = Math.max(1, Math.round(rect.height));
+    const rect = body.rectProvider
+      ? body.rectProvider()
+      : body.image.getBoundingClientRect();
+    const left = body.rectProvider ? Math.max(0, Math.floor(rect.left)) : rect.left;
+    const top = body.rectProvider ? Math.max(0, Math.floor(rect.top)) : rect.top;
+    const right = body.rectProvider ? Math.min(window.innerWidth, Math.ceil(rect.right)) : Math.ceil(rect.right);
+    const bottom = body.rectProvider ? Math.min(window.innerHeight, Math.ceil(rect.bottom)) : Math.ceil(rect.bottom);
+    const width = Math.max(0, right - left);
+    const height = Math.max(0, bottom - top);
     const sizeChanged = width !== body.width || height !== body.height;
 
-    body.x = rect.left;
-    body.y = rect.top;
+    body.x = width && height ? left : -10000;
+    body.y = width && height ? top : -10000;
     body.width = width;
     body.height = height;
-    if (forceMask || sizeChanged) makeMask(body);
+    if (forceMask || sizeChanged) {
+      if (body.rectangle) makeRectangleMask(body);
+      else makeMask(body);
+    }
   }
 
   function step(delta, now) {
@@ -404,9 +501,26 @@
     requestAnimationFrame(animate);
   }
 
+  const postColliders = postContent && postHeader
+    ? [
+        createRectangleCollider(() => postContent.getBoundingClientRect(), "post content"),
+        createRectangleCollider(() => {
+          const contentRect = postContent.getBoundingClientRect();
+          const headerRect = postHeader.getBoundingClientRect();
+          return {
+            left: contentRect.left,
+            right: contentRect.right,
+            top: headerRect.top,
+            bottom: headerRect.bottom
+          };
+        }, "post header")
+      ]
+    : [];
+
   Promise.all([
     Promise.all(objects.map(createBody)),
-    earth ? createSceneryCollider(earth, "terra") : Promise.resolve(null)
+    earth ? createSceneryCollider(earth, "terra") : Promise.resolve(null),
+    Promise.resolve(postColliders)
   ]).then(([createdBodies]) => {
     // Start every delay from the same instant so the launch order is guaranteed,
     // regardless of which image happened to decode first.

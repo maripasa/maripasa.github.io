@@ -18,3 +18,12 @@
 <link rel="stylesheet" href="{{ "css/home-earth.css" | relURL }}">
 <link rel="stylesheet" href="{{ "css/home-posts.css" | relURL }}">
 <link rel="stylesheet" href="{{ "css/wizard-cursor.css" | relURL }}">
+{{ if and .IsPage (eq .Section "posts") }}
+<style>
+  @media (max-width: 960px) {
+    #content {
+      max-width: calc(100vw - 160px);
+    }
+  }
+</style>
+{{ end }}

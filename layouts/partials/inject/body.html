@@ -2,6 +2,8 @@
 <div id="home-earth-anchor" aria-hidden="true">
   <img id="home-earth" src="{{ "images/space/earth.png" | relURL }}" alt="">
 </div>
+{{ end }}
+{{ if or .IsHome (and .IsPage (eq .Section "posts")) }}
 <div id="corner-creatures" aria-hidden="true">
   <img class="corner-creature corner-creature--bottom-left" src="{{ "images/characters/one-eyed-winged-creature.png" | relURL }}" alt="">
   <img class="corner-creature corner-creature--bottom-right" src="{{ "images/characters/one-eyed-winged-creature.png" | relURL }}" alt="">
@@ -19,7 +21,7 @@
     </div>
   </div>
 </div>
-{{ if .IsHome }}
+{{ if or .IsHome (and .IsPage (eq .Section "posts")) }}
 <div id="cosmic-physics-layer" aria-label="Seda e os planetas"></div>
 <script src="{{ "js/cosmic-physics.js" | relURL }}" defer></script>
 {{ end }}

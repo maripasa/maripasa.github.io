@@ -22,6 +22,7 @@
   ];
 
   const bodies = [];
+  const frameInterval = 1000 / 30;
   let previousTime = performance.now();
 
   const viewportScale = () => Math.max(0.72, Math.min(1, window.innerWidth / 760));
@@ -465,9 +466,17 @@
 
     for (const body of activeBodies) {
       if (body.fixed) syncSceneryCollider(body);
-      if (body.animated && now - body.lastMaskRefresh > 100) {
+      if (body.animated && now - body.lastMaskRefresh > 250) {
         makeMask(body);
         body.lastMaskRefresh = now;
+      }
+    }
+
+    // Gravity changes slowly enough to calculate once per rendered physics
+    // frame instead of repeating the same pair calculations in every substep.
+    for (let firstIndex = 0; firstIndex < activeBodies.length; firstIndex += 1) {
+      for (let secondIndex = firstIndex + 1; secondIndex < activeBodies.length; secondIndex += 1) {
+        attractBodies(activeBodies[firstIndex], activeBodies[secondIndex], delta);
       }
     }
 
@@ -484,7 +493,6 @@
         for (let secondIndex = firstIndex + 1; secondIndex < activeBodies.length; secondIndex += 1) {
           const first = activeBodies[firstIndex];
           const second = activeBodies[secondIndex];
-          attractBodies(first, second, subDelta);
           if (pixelsOverlap(first, second)) resolveCollision(first, second);
         }
       }
@@ -496,7 +504,11 @@
   }
 
   function animate(now) {
-    const delta = Math.min(1 / 30, Math.max(0, (now - previousTime) / 1000));
+    if (now - previousTime < frameInterval) {
+      requestAnimationFrame(animate);
+      return;
+    }
+    const delta = Math.min(frameInterval / 1000, Math.max(0, (now - previousTime) / 1000));
     previousTime = now;
     step(delta, now);
     requestAnimationFrame(animate);

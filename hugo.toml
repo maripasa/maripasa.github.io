@@ -1,15 +1,15 @@
 baseURL = "https://maripasa.github.io/"
 theme = "ficurinia"
 title = "maripasa."
-locale = "pt-br"
+languageCode = "pt-br"
 defaultContentLanguage = "pt"
 defaultContentLanguageInSubdir = false
 
 [languages]
   [languages.pt]
-    label = "Português"
+    languageName = "Português"
     weight = 1
-    locale = "pt-br"
+    languageCode = "pt-br"
 
 # this will be included in the footer after the current year the site is last
 # built, followed by the (c) symbol
@@ -38,12 +38,13 @@ summaryLength = 70  # number of words for article summaries
     oneSignalPopUps = false
 
     # It's best to put these icons in the "static" folder of your site
-    logo = "/logo.svg"
-    favicon = "/favicon.png"  # 32x32
-    faviconIco = "/favicon.ico"  # 32x32
-    appletouch = "/apple-touch-icon.png"  # 180x180
-    svgicon = "/logo.svg"
-    icon512 = "/icon512.png"  # 512x512 png image
+    logo = "/images/branding/home-star.avif"
+    logoAltText = "Página inicial"
+    favicon = "/images/branding/home-star.avif"
+    faviconIco = "/images/branding/home-star.avif"
+    appletouch = "/images/branding/home-star.avif"
+    svgicon = ""
+    icon512 = "/images/branding/home-star.avif"
 
     logoRightOfTitle = false  # positions the logo to the right of the title; default: false
 

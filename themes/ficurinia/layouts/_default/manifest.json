@@ -22,13 +22,13 @@
       {
         "src": "{{ .Site.Params.icon512 }}",
         "sizes": "512x512",
-        "type": "image/png",
+        "type": "image/avif",
         "purpose": "maskable"
       },
       {
         "src": "{{ .Site.Params.icon512 }}",
         "sizes": "512x512",
-        "type": "image/png",
+        "type": "image/avif",
         "purpose": "any"
       }
     ]

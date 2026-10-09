@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="{{ if .IsHome }}home{{ end }}" lang="{{ .Site.Language.Locale }}">
+<html class="{{ if .IsHome }}home{{ end }}" lang="{{ .Site.LanguageCode }}">
     {{- partial "head.html" . -}}
     {{- partial "build_assets.html" . -}}
     <body>

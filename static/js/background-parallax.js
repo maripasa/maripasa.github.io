@@ -4,7 +4,6 @@
   const verticalLayer = document.querySelector(".background-parallax-y");
   if (!verticalLayer) return;
 
-  const sun = document.querySelector("#home-sun");
   const scrollingElement = document.scrollingElement || document.documentElement;
   let scheduled = false;
 
@@ -21,13 +20,6 @@
     // At progress 0 the image starts at y=0. At progress 1 it has moved by
     // exactly imageHeight - viewportHeight, aligning both bottom edges.
     verticalLayer.style.setProperty("--background-parallax-offset", `${offset.toFixed(3)}px`);
-
-    if (sun) {
-      // The sun follows 88% of the page scroll, falling slightly behind
-      // the foreground content.
-      const sunOffset = scrollingElement.scrollTop * 0.12;
-      sun.style.setProperty("--home-sun-parallax-offset", `${sunOffset.toFixed(3)}px`);
-    }
 
   }
 

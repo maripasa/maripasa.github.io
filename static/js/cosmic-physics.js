@@ -4,7 +4,6 @@
   const layer = document.querySelector("#cosmic-physics-layer");
   if (!layer) return;
 
-  const sun = document.querySelector("#home-sun");
   const earth = document.querySelector("#home-earth");
 
   // The rocky planets use real diameter ratios with Earth = 32 px. The four
@@ -407,7 +406,6 @@
 
   Promise.all([
     Promise.all(objects.map(createBody)),
-    sun ? createSceneryCollider(sun, "sol") : Promise.resolve(null),
     earth ? createSceneryCollider(earth, "terra") : Promise.resolve(null)
   ]).then(([createdBodies]) => {
     // Start every delay from the same instant so the launch order is guaranteed,

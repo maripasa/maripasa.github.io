@@ -1,15 +1,19 @@
 <link
     rel="icon"
     href='{{ .Site.Params.favicon | default "/favicon.png" }}'
+    type="image/avif"
+    sizes="512x512"
 />
 <link
     rel="shortcut icon"
     href='{{ .Site.Params.faviconIco | default "/favicon.ico" }}'
-    type="image/x-icon"
+    type="image/avif"
 />
 <link
     rel="apple-touch-icon"
     href='{{ .Site.Params.appletouch | default "/apple-touch-icon.png" }}'
+    type="image/avif"
+    sizes="512x512"
 />
 {{ if .Site.Params.svgicon }}
     <link

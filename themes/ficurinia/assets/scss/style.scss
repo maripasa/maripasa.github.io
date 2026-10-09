@@ -421,6 +421,10 @@ h6 {font-size: 0.7 * $base_font_size * $title_font_mult;}
     }
 }
 
+#postlist .postlistitem h2 {
+    font-size: #{2.2 * $base_font_size * $title_font_mult};
+}
+
 // only hide hr in cards if they are in the article list
 // cards in list are divs, cards as in full-blown articles use the article tag
 {{ if (.Site.Params.paperCards | default false) }}

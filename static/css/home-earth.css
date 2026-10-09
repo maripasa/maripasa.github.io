@@ -1,0 +1,61 @@
+#home-earth-anchor {
+  position: relative;
+  z-index: 1100;
+  width: 100%;
+  margin-top: 3rem;
+  pointer-events: none;
+}
+
+#home-earth {
+  display: block;
+  width: clamp(480px, 72vw, 900px);
+  max-width: none;
+  height: auto;
+  margin: 0 auto;
+  filter: drop-shadow(0 0 42px rgb(70 145 255 / 35%));
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+#corner-creatures {
+  position: fixed;
+  z-index: 2;
+  inset: 12px;
+  pointer-events: none;
+}
+
+.corner-creature {
+  position: absolute;
+  display: block;
+  width: clamp(88px, 12vw, 145px);
+  height: auto;
+  margin: 0;
+  opacity: 0.42;
+  filter: invert(1);
+  mix-blend-mode: screen;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.corner-creature--top-left {
+  top: 0;
+  left: 0;
+}
+
+.corner-creature--top-right {
+  top: 0;
+  right: 0;
+  transform: scaleX(-1);
+}
+
+.corner-creature--bottom-left {
+  bottom: 0;
+  left: 0;
+  transform: scaleY(-1);
+}
+
+.corner-creature--bottom-right {
+  right: 0;
+  bottom: 0;
+  transform: scale(-1, -1);
+}

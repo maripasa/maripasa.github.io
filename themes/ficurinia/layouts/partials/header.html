@@ -32,13 +32,13 @@
     </div>
     <div id="links">
         {{ if .Site.Params.showRss | default true }}
-            {{- partial "iconlink" (dict "Identifier" "rss" "Name" "RSS" "URL" "/index.xml") -}}
+            {{- partial "iconlink" (dict "Identifier" "rss" "Name" "RSS" "URL" "/index.xml" "Data" .Site.Data) -}}
         {{ end }}
         {{ range .Site.Params.links }}
             {{- partial "nerdlink" . -}}
         {{ end }}
         {{ range .Site.Menus.icons }}
-            {{- partial "iconlink" . -}}
+            {{- partial "iconlink" (dict "Identifier" .Identifier "Name" .Name "URL" .URL "Data" $.Site.Data) -}}
         {{ end }}
     </div>
     {{ if and
